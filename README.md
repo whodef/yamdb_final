@@ -1,13 +1,10 @@
+![yamdb_final event parameter](https://github.com/github/docs/actions/workflows/main.yml/badge.svg?event=push)
+
 # Проект YaMDb
-
-![yamdb_final workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg?event=push)
-
-##### yamdb_final 
 
 Сервис YaMDb — база отзывов о фильмах, книгах и музыке.
 
-Это совместный проект и настоящая командная работа трёх студентов на Яндекс.Практикум
-
+Это совместный проект и настоящая командная работа трёх студентов на Яндекс.Практикум, с применением Docker и DockerHub.
 
 ## Описание проекта
 
@@ -46,6 +43,20 @@ git clone https://github.com/whodef/api_yamdb.git
 cd api_yamdb
 ```
 
+Создать в директории infra_sp2\infra файл `.env` с параметрами:
+
+```
+DB_ENGINE=django.db.backends.postgresql
+DB_NAME=postgres
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+DB_HOST=db
+DB_PORT=5432
+
+ALLOWED_HOSTS=localhost, 127.0.0.1, web, 127.0.0.1:8000, localhost:8000, web:8000
+SECRET_KEY=<KEY>
+```
+
 Создать и активировать виртуальное окружение:
 
 ```
@@ -78,18 +89,52 @@ python3 manage.py migrate
 python3 manage.py runserver
 ```
 
-## Запуск тестов
 
-Из корня проекта:
+## Запуск проекта в Doker
+Чтобы собрать контейнеры, необходимо сделать клон всего проекта
+
+Запустите docker-compose:
 
 ```
-pytest
+docker-compose up -d --build
 ```
 
+Соберите файлы статики, и запустите миграции командами:
+
+```
+docker-compose exec web python manage.py makemigrations
+docker-compose exec web python manage.py migrate
+docker-compose exec web python manage.py collectstatic --no-input
+```
+
+Создайте суперпользователя командой:
+
+```
+docker-compose exec web python manage.py createsuperuser
+```
+
+Команда по загрузке файла fixtures в БД
+```
+docker-compose exec web python manage.py dumpdata > fixtures.json
+```
+
+Остановить можно командой:
+
+```
+docker-compose down -v
+```
+
+Также вместе с проектом лежат предварительно созданные фикстуры с тестовыми данными Загрузить фикстуры можно командой:
+
+```
+docker-compose exec web python manage.py loaddata fixtures.json
+```
 
 ## Авторы
 
 [Татьяна Селюк](https://github.com/whodef) - управление пользователями (Auth и Users): система регистрации и аутентификации, права доступа, работа с токеном, система подтверждения e-mail, поля.
+
+### Над проектом так же трудились на прошлом спринте:
 
 [Максим Чен](https://github.com/on1y4fun) - категории (Categories), жанры (Genres) и произведения (Titles): модели, view и эндпойнты для них.
 
