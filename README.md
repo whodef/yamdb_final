@@ -1,8 +1,8 @@
 # Проект YaMDb
 
-##### yamdb_final
-
 ![yamdb_final workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg?event=push)
+
+##### yamdb_final 
 
 Сервис YaMDb — база отзывов о фильмах, книгах и музыке.
 
