@@ -91,7 +91,12 @@ python3 manage.py runserver
 
 
 ## Запуск проекта в Doker
-Чтобы собрать контейнеры, необходимо сделать клон всего проекта
+
+Стяните образ из DockerHub
+
+```
+ docker pull whodef/infra_yam:latest
+```
 
 Запустите docker-compose:
 
