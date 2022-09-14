@@ -69,7 +69,6 @@ jobs:
             sudo docker-compose rm web
             
             touch .env
-            echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
             
             echo EMAIL_BACKEND=${{ secrets.EMAIL_BACKEND }} >> .env
             echo EMAIL_HOST=${{ secrets.EMAIL_HOST }} >> .env
