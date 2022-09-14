@@ -92,12 +92,6 @@ python3 manage.py runserver
 
 ## Запуск проекта в Doker
 
-Стяните образ из DockerHub
-
-```
- docker pull whodef/infra_yam:latest
-```
-
 Запустите docker-compose:
 
 ```
