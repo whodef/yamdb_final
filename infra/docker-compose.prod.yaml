@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13.0-alpine
+    volumes:
+      - db_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+  web:
+    image: whodef/infra_yam:latest
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+
+  nginx:
+    image: whodef/infra_yam:nginx-latest
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+
+volumes:
+  db_data:
