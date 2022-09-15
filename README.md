@@ -138,6 +138,3 @@ docker-compose exec web python manage.py loaddata fixtures.json
 [Максим Чен](https://github.com/on1y4fun) - категории (Categories), жанры (Genres) и произведения (Titles): модели, view и эндпойнты для них.
 
 [Сергей Волков](https://github.com/Svolkov-nsk) - отзывы (Review) и комментарии (Comments): модели и view, эндпойнты, права доступа для запросов. Рейтинги произведений.
-
-
-### Лицензия [MIT](https://opensource.org/licenses/MIT)
