@@ -46,42 +46,15 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./api_yamdb
-          target: app
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/infra_yam:latest
           file: ./api_yamdb/Dockerfile
           cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/infra_yam:buildcache,mode=max
-
-  build_and_push_nginx_to_docker_hub:
-    name: Push Docker image to Docker Hub
-    runs-on: ubuntu-latest
-    needs: build_and_push_app_to_docker_hub
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Login to Docker
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Push to Docker Hub
-        uses: docker/build-push-action@v2
-        with:
-          context: ./infra
-          target: nginx
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/infra_yam:nginx-latest
-          file: ./api_yamdb/Dockerfile
           cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/infra_yam:buildcache
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [build_and_push_app_to_docker_hub, build_and_push_nginx_to_docker_hub]
+    needs: build_and_push_app_to_docker_hub
     steps:
       - name: executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
@@ -111,10 +84,12 @@ jobs:
             echo DB_HOST=${{ secrets.DB_HOST }} >> .env
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
             
-            sudo docker-compose -f docker-compose.prod.yaml stop web nginx
-            sudo docker-compose -f docker-compose.prod.yaml rm web nginx
+            sudo docker-compose -f docker-compose.prod.yaml stop web
+            sudo docker-compose -f docker-compose.prod.yaml rm web
             
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/infra_yam:latest
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/infra_yam:nginx-latest
             
             sudo docker-compose -f docker-compose.prod.yaml up -d
+            
+            sudo docker-compose -f docker-compose.prod.yaml exec web sh -c 'rm -rf /app/static/* /app/media/*'
+            sudo docker-compose -f docker-compose.prod.yaml exec web python3 manage.py collectstatic --no-input
