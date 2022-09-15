@@ -11,6 +11,7 @@ services:
     build:
       dockerfile: ../api_yamdb/Dockerfile
       context: ../api_yamdb
+      target: app
     volumes:
       - static_value:/app/static/
       - media_value:/app/media/
