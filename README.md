@@ -1,4 +1,4 @@
-![yamdb_final event parameter](https://github.com/whodef/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg?event=push) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![yamdb_final event parameter](https://github.com/whodef/yamdb_final/actions/workflows/yamdb_workflow.yml/badge.svg?event=push)
 
 # Проект YaMDb
 
