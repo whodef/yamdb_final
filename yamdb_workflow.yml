@@ -105,7 +105,7 @@ jobs:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
         message: |
-          Выполнен ${{ github.workflow }}
+          ${{ github.workflow }} fulfilled
           
           ${{ github.actor }} created commit:
           Commit message: ${{ github.event.commits[0].message }}
