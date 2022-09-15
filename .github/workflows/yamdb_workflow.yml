@@ -86,12 +86,12 @@ jobs:
             echo DB_HOST=${{ secrets.DB_HOST }} >> .env
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
             
-            sudo docker-compose -f docker-compose.prod.yaml stop web
-            sudo docker-compose -f docker-compose.prod.yaml rm --force web
+            docker-compose -f docker-compose.prod.yaml stop web
+            docker-compose -f docker-compose.prod.yaml rm --force web
             
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/infra_yam:latest
+            docker pull ${{ secrets.DOCKER_USERNAME }}/infra_yam:latest
             
-            sudo docker-compose -f docker-compose.prod.yaml up -d
+            docker-compose -f docker-compose.prod.yaml up -d
             
             docker exec \
               -t $(docker-compose -f docker-compose.prod.yaml ps -q web) \
