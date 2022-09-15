@@ -63,6 +63,8 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            
+            set -x
            
             rm -rf yamdb_final
             git clone ${{ secrets.REPOSITORY }}
@@ -85,7 +87,7 @@ jobs:
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
             
             sudo docker-compose -f docker-compose.prod.yaml stop web
-            sudo docker-compose -f docker-compose.prod.yaml rm web
+            sudo docker-compose -f docker-compose.prod.yaml rm --force web
             
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/infra_yam:latest
             
