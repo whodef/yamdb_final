@@ -4,7 +4,7 @@
 
 Сервис YaMDb — база отзывов о фильмах, книгах и музыке.
 
-Это совместный проект и настоящая командная работа трёх студентов на Яндекс.Практикум, с применением Docker и DockerHub.
+Это совместный проект и настоящая командная работа трёх студентов на Яндекс.Практикум, с применением Docker, Docker Compose и DockerHub.
 
 ### Настроен CI/CD
 
@@ -36,65 +36,26 @@ API для сервиса YaMDb.
 
 ## Как запустить проект
 
-Клонировать репозиторий и перейти в него в командной строке:
+Склонируйте репозиторий и перейдите в него в командной строке:
 
 ```
-git clone https://github.com/whodef/api_yamdb.git
+git clone https://github.com/whodef/yamdb_final.git
 
 ```
 
-```
-cd api_yamdb
-```
+Выполните вход на свой удаленный сервер
 
-Создать в директории infra_sp2\infra файл `.env` с параметрами:
+Установите docker на сервер:
 
 ```
-DB_ENGINE=django.db.backends.postgresql
-DB_NAME=postgres
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-DB_HOST=db
-DB_PORT=5432
-
-ALLOWED_HOSTS=localhost, 127.0.0.1, web, 127.0.0.1:8000, localhost:8000, web:8000
-SECRET_KEY=<KEY>
+sudo apt install docker.io
 ```
 
-Создать и активировать виртуальное окружение:
+Установите docker-compose на сервер:
 
 ```
-python3 -m venv env
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 ```
-
-```
-source env/bin/activate
-```
-
-Установить зависимости из файла requirements.txt:
-
-```
-python3 -m pip install --upgrade pip
-```
-
-```
-pip install -r requirements.txt
-```
-
-Выполнить миграции:
-
-```
-python3 manage.py migrate
-```
-
-Запустить проект:
-
-```
-python3 manage.py runserver
-```
-
-
-## Запуск проекта в Doker
 
 Запустите docker-compose:
 
@@ -106,7 +67,11 @@ docker-compose up -d --build
 
 ```
 docker-compose exec web python manage.py makemigrations
+```
+```
 docker-compose exec web python manage.py migrate
+```
+```
 docker-compose exec web python manage.py collectstatic --no-input
 ```
 
@@ -127,15 +92,9 @@ docker-compose exec web python manage.py dumpdata > fixtures.json
 docker-compose down -v
 ```
 
-Также вместе с проектом лежат предварительно созданные фикстуры с тестовыми данными Загрузить фикстуры можно командой:
-
-```
-docker-compose exec web python manage.py loaddata fixtures.json
-```
-
 ## Авторы
 
-[Татьяна Селюк](https://github.com/whodef) - управление пользователями (Auth и Users): система регистрации и аутентификации, права доступа, работа с токеном, система подтверждения e-mail, поля.
+[Татьяна Селюк](https://github.com/whodef) - настройка CI/CD проекта, управление пользователями (Auth и Users): система регистрации и аутентификации, права доступа, работа с токеном, система подтверждения e-mail, поля.
 
 ### Над проектом так же трудились на прошлом спринте:
 
