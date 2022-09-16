@@ -34,7 +34,7 @@ API для сервиса YaMDb.
 **Произведения, к которым пишут отзывы**: получить список всех объектов, создать произведение для отзывов, информация об объекте, обновить информацию об объекте, удалить произведение.
 
 
-## Как запустить проект
+## Как запустить проект на сервере с Ubuntu
 
 Склонируйте репозиторий и перейдите в него в командной строке:
 
@@ -66,24 +66,24 @@ docker-compose up -d --build
 Соберите файлы статики, и запустите миграции командами:
 
 ```
-docker-compose exec web python manage.py makemigrations
+docker-compose exec web python3 manage.py makemigrations
 ```
 ```
-docker-compose exec web python manage.py migrate
+docker-compose exec web python3 manage.py migrate
 ```
 ```
-docker-compose exec web python manage.py collectstatic --no-input
+docker-compose exec web python3 manage.py collectstatic --no-input
 ```
 
 Создайте суперпользователя командой:
 
 ```
-docker-compose exec web python manage.py createsuperuser
+docker-compose exec web python3 manage.py createsuperuser
 ```
 
 Команда по загрузке файла fixtures в БД
 ```
-docker-compose exec web python manage.py dumpdata > fixtures.json
+docker-compose exec web python3 manage.py dumpdata > fixtures.json
 ```
 
 Остановить можно командой:
