@@ -93,7 +93,7 @@ jobs:
             
             docker exec \
               -t $(docker-compose -f docker-compose.yaml ps -q web) \
-              sh -c 'rm -rf /app/static/* /app/media/* && python3 manage.py collectstatic --no-input'
+              sh -c 'python3 manage.py collectstatic --no-input'
 
   send_message:
     runs-on: ubuntu-latest
