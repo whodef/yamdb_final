@@ -84,8 +84,8 @@ jobs:
             echo DB_HOST=${{ secrets.DB_HOST }} >> .env
             echo DB_PORT=${{ secrets.DB_PORT }} >> .env
             
-            docker-compose -f docker-compose.yaml stop web
-            docker-compose -f docker-compose.yaml rm --force web
+            docker-compose -f docker-compose.yaml stop web nginx
+            docker-compose -f docker-compose.yaml rm --force web nginx
             
             docker pull ${{ secrets.DOCKER_USERNAME }}/infra_yam:latest
             
